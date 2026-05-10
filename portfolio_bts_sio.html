@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio BTS SIO — Hackathon & Compétences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --surface: #1e1e28;
+    --surface2: #252530;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0eff8;
+    --muted: #8b8a99;
+    --accent: #7c6fff;
+    --accent2: #a590ff;
+    --accent-glow: rgba(124,111,255,0.15);
+    --teal: #00d4aa;
+    --teal-dim: rgba(0,212,170,0.12);
+    --coral: #ff6b52;
+    --coral-dim: rgba(255,107,82,0.12);
+    --gold: #f0c060;
+    --gold-dim: rgba(240,192,96,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent2); }
+
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--text); }
+
+  .nav-badge {
+    background: var(--accent-glow);
+    border: 1px solid rgba(124,111,255,0.3);
+    color: var(--accent2);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,111,255,0.12) 0%, transparent 70%);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
+    bottom: 0; left: -100px;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--teal);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 14ch;
+  }
+
+  .hero h1 .line-accent { color: var(--accent2); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 50ch;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-item .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-item .num span { color: var(--accent2); }
+
+  .stat-item .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    max-width: 55ch;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  /* HACKATHON HERO SECTION */
+  #hackathon { background: var(--bg2); }
+
+  .hackathon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .hack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .hack-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .hack-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(124,111,255,0.08) 100%);
+    border-color: rgba(124,111,255,0.25);
+  }
+
+  .hack-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+
+  .tag-accent { background: var(--accent-glow); color: var(--accent2); border: 1px solid rgba(124,111,255,0.25); }
+  .tag-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(0,212,170,0.25); }
+  .tag-coral { background: var(--coral-dim); color: var(--coral); border: 1px solid rgba(255,107,82,0.25); }
+  .tag-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(240,192,96,0.25); }
+
+  .hack-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hack-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .hack-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .tech-pill {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+  }
+
+  .hack-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hack-visual-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hack-visual-bar span:first-child {
+    font-size: 0.75rem;
+    color: var(--muted);
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 1s ease;
+  }
+
+  .bar-fill.accent { background: var(--accent); }
+  .bar-fill.teal { background: var(--teal); }
+  .bar-fill.coral { background: var(--coral); }
+  .bar-fill.gold { background: var(--gold); }
+
+  .hack-visual-bar .pct {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+    width: 32px;
+    text-align: right;
+  }
+
+  /* COMPETENCES */
+  #competences { background: var(--bg); }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .comp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    transition: height 0.3s;
+  }
+
+  .comp-card.accent-l::before { background: var(--accent); }
+  .comp-card.teal-l::before { background: var(--teal); }
+  .comp-card.coral-l::before { background: var(--coral); }
+  .comp-card.gold-l::before { background: var(--gold); }
+
+  .comp-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    background: var(--surface2);
+  }
+
+  .comp-code {
+    font-family: 'DM Sans', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .comp-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .comp-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .comp-detail {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .comp-detail.open { display: block; }
+
+  .comp-detail ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .comp-detail li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .comp-detail li::before {
+    content: '→';
+    color: var(--accent2);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .comp-toggle {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 500;
+    border: none;
+    background: none;
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+
+  .comp-toggle:hover { opacity: 0.75; }
+
+  /* DOCUMENTS */
+  #documents { background: var(--bg2); }
+
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .doc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .doc-card:hover {
+    border-color: rgba(124,111,255,0.35);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .doc-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .doc-icon.pdf { background: var(--coral-dim); }
+  .doc-icon.pdf::after { content: '📄'; }
+
+  .doc-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .doc-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .doc-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .doc-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent2);
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+
+  /* TIMELINE */
+  #parcours { background: var(--bg); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    max-width: 700px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: var(--border2);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 2.5rem 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.35rem;
+    top: 0.4rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item.teal::before { background: var(--teal); }
+  .timeline-item.coral::before { background: var(--coral); }
+  .timeline-item.gold::before { background: var(--gold); }
+
+  .tl-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .tl-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .tl-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* SKILLS BARS */
+  #skills { background: var(--bg2); }
+
+  .skills-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .skill-group h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-row {
+    margin-bottom: 1rem;
+  }
+
+  .skill-row-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .skill-row-header span:last-child {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .skill-bar {
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    animation: fillBar 1.2s ease forwards;
+    width: 0;
+  }
+
+  @keyframes fillBar {
+    to { width: var(--w); }
+  }
+
+  /* CONTACT */
+  #contact { background: var(--bg); }
+
+  .contact-inner {
+    max-width: 600px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .contact-inner .section-title { margin-bottom: 1rem; }
+  .contact-inner .section-desc { margin: 0 auto 2.5rem; }
+
+  .contact-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .hackathon-grid { grid-template-columns: 1fr; }
+    .hack-card.featured { grid-template-columns: 1fr; }
+    .skills-two-col { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Port<span>folio</span></a>
+  <ul>
+    <li><a href="#hackathon">Hackathon</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#skills">Outils</a></li>
+    <li><a href="#documents">Documents</a></li>
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">BTS SIO · Option SISR</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <p class="hero-eyebrow">M'hemed Ben Mabrouk</p>
+
+  <h1>
+    BTS SIO<br>
+    <span class="line-accent">Première</span><br>
+    Année
+  </h1>
+
+  <p class="hero-sub">
+    Étudiant en BTS Services Informatiques aux Organisations (option SISR), 
+    passionné par les systèmes, réseaux et solutions IT. 
+    Projet phare : déploiement complet d'une infrastructure GLPI lors d'un hackathon en équipe.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="#hackathon" class="btn-primary">Voir le Hackathon ↓</a>
+    <a href="#documents" class="btn-outline">📄 Télécharger les documents</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="num">6<span>+</span></div>
+      <div class="label">Compétences validées</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">1<span>re</span></div>
+      <div class="label">Année de formation</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">HACKATHON<span></span></div>
+      <div class="label">Projet principal</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">SISR<span></span></div>
+      <div class="label">Option choisie</div>
+    </div>
+  </div>
+</section>
+
+<!-- HACKATHON -->
+<section id="hackathon">
+  <p class="section-label fade-up">⚡ Projet principal</p>
+  <h2 class="section-title fade-up">Hackathon :<br>Infrastructure GLPI</h2>
+  <p class="section-desc fade-up">
+    Travail en équipe sur la mise en place d'une infrastructure GLPI complète — 
+    inventaire du parc informatique, ticketing, hébergement local et cloud.
+  </p>
+
+  <div class="hackathon-grid">
+
+    <div class="hack-card featured fade-up">
+      <div>
+        <span class="hack-tag tag-accent">Projet phare</span>
+        <h3>Déploiement GLPI — Infrastructure complète</h3>
+        <p>
+          Mise en place d'une plateforme de gestion du parc informatique et de ticketing. 
+          L'équipe a déployé GLPI sur deux environnements : une VM locale Debian 12 via pile LAMP, 
+          et un hébergement cloud sur Microsoft Azure avec crédit étudiant.
+          L'agent GLPI a été installé sur plusieurs machines pour un inventaire automatisé.
+        </p>
+        <div class="hack-tech-list">
+          <span class="tech-pill">GLPI 10.0</span>
+          <span class="tech-pill">Debian 12</span>
+          <span class="tech-pill">Apache2</span>
+          <span class="tech-pill">MariaDB</span>
+          <span class="tech-pill">PHP 8</span>
+          <span class="tech-pill">Azure VM</span>
+          <span class="tech-pill">SSH / PEM</span>
+          <span class="tech-pill">glpi-agent</span>
+        </div>
+      </div>
+      <div class="hack-visual">
+        <h4 style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.5rem;">Avancement des livrables</h4>
+        <div class="hack-visual-bar">
+          <span>Déploiement</span>
+          <div class="bar-track"><div class="bar-fill accent" style="width:95%"></div></div>
+          <span class="pct">95%</span>
+        </div>
+        <div class="hack-visual-bar">
+          <span>Inventaire</span>
+          <div class="bar-track"><div class="bar-fill teal" style="width:90%"></div></div>
+          <span class="pct">90%</span>
+        </div>
+        <div class="hack-visual-bar">
+          <span>Ticketing</span>
+          <div class="bar-track"><div class="bar-fill coral" style="width:85%"></div></div>
+          <span class="pct">85%</span>
+        </div>
+        <div class="hack-visual-bar">
+          <span>Cloud Azure</span>
+          <div class="bar-track"><div class="bar-fill gold" style="width:80%"></div></div>
+          <span class="pct">80%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hack-card fade-up">
+      <span class="hack-tag tag-teal">C1 · Inventaire</span>
+      <h3>Recensement du parc informatique</h3>
+      <p>Installation de l'agent GLPI sur les machines Debian de l'équipe. Inventaire automatique des ressources (RAM, CPU, stockage, OS). Configuration via <code style="background:var(--surface2);padding:0.1rem 0.3rem;border-radius:4px;font-size:0.8rem;">agent.cfg</code> et lancement forcé.</p>
+      <div class="hack-tech-list">
+        <span class="tech-pill">glpi-agent 1.15</span>
+        <span class="tech-pill">systemctl</span>
+        <span class="tech-pill">Perl</span>
+      </div>
+    </div>
+
+    <div class="hack-card fade-up">
+      <span class="hack-tag tag-coral">C7 · Ticketing</span>
+      <h3>Collecte et suivi des demandes</h3>
+      <p>Création d'utilisateurs GLPI (manuel + LDAP), gestion des profils et habilitations. Workflow d'assignation des tickets aux groupes techniciens. Bonnes pratiques RGPD (désactivation au lieu de suppression).</p>
+      <div class="hack-tech-list">
+        <span class="tech-pill">LDAP</span>
+        <span class="tech-pill">Profils GLPI</span>
+        <span class="tech-pill">Entités</span>
+      </div>
+    </div>
+
+    <div class="hack-card fade-up">
+      <span class="hack-tag tag-gold">C14 · Gestion</span>
+      <h3>Planification avec Trello</h3>
+      <p>Mise en place d'un tableau Kanban (À faire / En cours / Terminé). Tâches définies selon la méthode SMART. Répartition par rôle et attribution nominative des cartes à chaque membre de l'équipe.</p>
+      <div class="hack-tech-list">
+        <span class="tech-pill">Trello</span>
+        <span class="tech-pill">Méthode SMART</span>
+        <span class="tech-pill">Kanban</span>
+      </div>
+    </div>
+
+    <div class="hack-card fade-up">
+      <span class="hack-tag tag-accent">C11 · Visibilité</span>
+      <h3>Suivi analytique du site vitrine</h3>
+      <p>Intégration de Google Analytics 4 sur le site vitrine du hackathon. Configuration des événements personnalisés (clics bouton contact, soumissions formulaire, téléchargements). Validation via Tag Assistant et DebugView.</p>
+      <div class="hack-tech-list">
+        <span class="tech-pill">Google Analytics 4</span>
+        <span class="tech-pill">gtag.js</span>
+        <span class="tech-pill">Tag Assistant</span>
+      </div>
+    </div>
+
+    <div class="hack-card fade-up">
+      <span class="hack-tag tag-teal">C17 · Déploiement</span>
+      <h3>Hébergement local & Azure</h3>
+      <p>VM Debian 12 locale avec pile LAMP complète. VirtualHost Apache configuré. Réplication sur Azure (Ubuntu VM, clé PEM, IP publique). GLPI accessible depuis n'importe quel appareil connecté à Internet.</p>
+      <div class="hack-tech-list">
+        <span class="tech-pill">VMware</span>
+        <span class="tech-pill">Microsoft Azure</span>
+        <span class="tech-pill">VirtualHost</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPETENCES -->
+<section id="competences">
+  <p class="section-label fade-up">📋 Référentiel BTS SIO</p>
+  <h2 class="section-title fade-up">Compétences<br>mobilisées</h2>
+  <p class="section-desc fade-up">
+    L'ensemble des compétences du référentiel BTS SIO (première année) couvertes au cours de la formation et du hackathon. Cliquez sur une carte pour voir le détail.
+  </p>
+
+  <div class="comp-grid">
+
+    <div class="comp-card accent-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C1</p>
+      <h3>Recensement et identification des ressources numériques</h3>
+      <p>Inventaire du parc informatique de l'équipe hackathon via GLPI et son agent.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Installation de l'agent GLPI (glpi-agent 1.15) sur VM Debian</li>
+          <li>Configuration du fichier <code>agent.cfg</code> (URL serveur, tag, SSL)</li>
+          <li>Lancement de l'inventaire forcé et vérification dans GLPI</li>
+          <li>Résolution d'erreurs 403 / 404 / problèmes de certificat SSL</li>
+          <li>Activation du plugin GLPI Inventory côté serveur</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card teal-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C2</p>
+      <h3>Exploitation des référentiels, normes et standards</h3>
+      <p>Application des bonnes pratiques ITSM dans la gestion du parc et des tickets.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Respect des SLAs dans le suivi des demandes</li>
+          <li>Respect des règles d'utilisation des ressources numériques</li>
+          <li>Application du principe de moindre privilège (profils GLPI)</li>
+          <li>Conformité RGPD : désactivation au lieu de suppression d'utilisateurs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card coral-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C3</p>
+      <h3>Mise en place et vérification des habilitations</h3>
+      <p>Gestion des droits d'accès utilisateurs dans GLPI par entités et profils.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Création manuelle d'utilisateurs (Administration > Utilisateurs)</li>
+          <li>Affectation de profils : Self-Service, Technician, Supervisor, Admin</li>
+          <li>Configuration des habilitations récursives sur les entités parentes</li>
+          <li>Liaison avec annuaire LDAP / Active Directory</li>
+          <li>Test de connexion pour vérifier les droits accordés</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card gold-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C7</p>
+      <h3>Collecte, suivi et orientation des demandes</h3>
+      <p>Mise en place du workflow de ticketing pour l'équipe hackathon dans GLPI.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Structure triptyque Entité / Profil / Groupe pour chaque utilisateur</li>
+          <li>Assignation des tickets à des groupes (pas à des individus)</li>
+          <li>Activation des notifications "Peut être notifié" sur les groupes</li>
+          <li>Auto-création de comptes via collecteurs de mails</li>
+          <li>Cycle de vie : désactivation et anonymisation RGPD</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card accent-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C11</p>
+      <h3>Référencement des services en ligne et mesure de leur visibilité</h3>
+      <p>Mise en place de Google Analytics 4 sur le site vitrine du projet hackathon.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Création de propriété GA4 et configuration du flux de données web</li>
+          <li>Intégration du script gtag.js dans le &lt;head&gt; de toutes les pages</li>
+          <li>Validation via Chrome Google Tag Assistant et rapport Temps réel</li>
+          <li>Configuration d'événements personnalisés (clics, soumissions, téléchargements)</li>
+          <li>Analyse du taux de rebond et durée de session par page</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card teal-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C12</p>
+      <h3>Participation à l'évolution d'un site Web</h3>
+      <p>Contribution au site vitrine du projet hackathon et publication sur GitHub Pages.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Création et gestion d'un dépôt GitHub pour le projet</li>
+          <li>Publication du site vitrine sur GitHub Pages</li>
+          <li>Participation à la valorisation de l'image de l'organisation en ligne</li>
+          <li>Respect du cadre juridique et des droits numériques</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card coral-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C14</p>
+      <h3>Planification des activités</h3>
+      <p>Organisation du travail en équipe avec Trello selon la méthode agile Kanban.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Création d'un tableau Trello avec colonnes À faire / En cours / Terminé</li>
+          <li>Définition de tâches SMART (Spécifique, Mesurable, Atteignable, Réaliste, Temporel)</li>
+          <li>Répartition des cartes par rôle et compétence à développer</li>
+          <li>Invitation des membres et gestion des droits d'accès (Membre/Admin)</li>
+          <li>Suivi des déplacements de tâches et des échéances</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comp-card gold-l fade-up" onclick="toggleComp(this)">
+      <p class="comp-code">C17</p>
+      <h3>Déploiement d'un service informatique</h3>
+      <p>Installation et configuration complète de GLPI en environnement local et cloud Azure.</p>
+      <button class="comp-toggle">Voir le détail ↓</button>
+      <div class="comp-detail">
+        <ul>
+          <li>Création d'une VM Debian 12 avec 2 Go RAM / 20 Go stockage</li>
+          <li>Installation de la pile LAMP (Apache, MariaDB, PHP + extensions)</li>
+          <li>Configuration de la base de données MariaDB et des droits SQL</li>
+          <li>Configuration du VirtualHost Apache et activation de mod_rewrite</li>
+          <li>Déploiement miroir sur Azure (Ubuntu VM, SSH PEM, IP publique)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS TOOLS -->
+<section id="skills">
+  <p class="section-label fade-up">🛠️ Compétences techniques</p>
+  <h2 class="section-title fade-up">Outils &<br>Technologies</h2>
+  <p class="section-desc fade-up">Niveau de maîtrise des outils utilisés au cours de la première année.</p>
+
+  <div class="skills-two-col fade-up">
+    <div class="skill-group">
+      <h4>Systèmes & Réseau</h4>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>Linux / Debian</span><span>Avancé</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%; background:var(--accent);width:80%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>Apache2 / LAMP</span><span>Intermédiaire</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:70%; background:var(--teal);width:70%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>MariaDB / SQL</span><span>Intermédiaire</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:65%; background:var(--coral);width:65%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>SSH / Clés PEM</span><span>Intermédiaire</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:60%; background:var(--gold);width:60%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>Microsoft Azure</span><span>Débutant avancé</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:55%; background:var(--accent);width:55%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Applications & Méthodes</h4>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>GLPI</span><span>Avancé</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:85%; background:var(--teal);width:85%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>Trello / Kanban</span><span>Avancé</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%; background:var(--coral);width:80%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>Google Analytics 4</span><span>Intermédiaire</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:65%; background:var(--gold);width:65%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>GitHub / Git</span><span>Intermédiaire</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:70%; background:var(--accent);width:70%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-header"><span>LDAP / Active Directory</span><span>Débutant avancé</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:50%; background:var(--teal);width:50%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section id="documents">
+  <p class="section-label fade-up">📁 Ressources</p>
+  <h2 class="section-title fade-up">Documents<br>officiels</h2>
+  <p class="section-desc fade-up">
+    Accédez aux documents de formation produits au cours de la première année de BTS SIO.
+  </p>
+
+  <div class="docs-grid">
+
+    <a href="tableau-synthese.pdf.pdf" download class="doc-card fade-up">
+      <div class="doc-icon pdf"></div>
+      <div>
+        <h3>Tableau de synthèse des réalisations professionnelles</h3>
+        <p>Tableau récapitulatif de l'ensemble des réalisations professionnelles avec les compétences BTS SIO associées (C1 à C17).</p>
+      </div>
+      <div class="doc-meta">
+        <span>PDF · Session 2023</span>
+        <span class="doc-dl">Télécharger ↓</span>
+      </div>
+    </a>
+
+    <a href="documentation-compétence.pdf" download class="doc-card fade-up">
+      <div class="doc-icon pdf"></div>
+      <div>
+        <h3>Compte rendu des compétences — Hackathon GLPI</h3>
+        <p>Documentation technique détaillée couvrant les compétences C1, C7, C11, C14 et C17 développées lors du projet hackathon.</p>
+      </div>
+      <div class="doc-meta">
+        <span>PDF · BTS SIO 1re année</span>
+        <span class="doc-dl">Télécharger ↓</span>
+      </div>
+    </a>
+
+    <div class="doc-card fade-up" style="cursor:default; opacity:0.6;">
+      <div class="doc-icon pdf"></div>
+      <div>
+        <h3>Rapport de stage — À venir</h3>
+        <p>Rapport de la période en milieu professionnel (première année). Disponible après la fin du stage.</p>
+      </div>
+      <div class="doc-meta">
+        <span>PDF · En cours</span>
+        <span style="font-size:0.8rem;color:var(--muted);">Bientôt disponible</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARCOURS -->
+<section id="parcours">
+  <p class="section-label fade-up">🗓️ Chronologie</p>
+  <h2 class="section-title fade-up">Parcours de<br>formation</h2>
+  <p class="section-desc fade-up">Les grandes étapes de la première année de BTS SIO.</p>
+
+  <div class="timeline fade-up">
+    <div class="timeline-item">
+      <p class="tl-date">Septembre 2025</p>
+      <p class="tl-title">Rentrée BTS SIO </p>
+      <p class="tl-desc">Début de la formation. Découverte des bases Linux, administration système et réseaux. Création du portfolio et des premiers dépôts GitHub.</p>
+    </div>
+    <div class="timeline-item teal">
+      <p class="tl-date">Octobre — Novembre 2025</p>
+      <p class="tl-title">Projet Hackathon — Infrastructure GLPI</p>
+      <p class="tl-desc">Travail en équipe sur la mise en place d'une plateforme GLPI complète. Déploiement de la pile LAMP, configuration de l'agent d'inventaire, gestion des utilisateurs et tickets. Hébergement cloud sur Azure.</p>
+    </div>
+    <div class="timeline-item coral">
+      <p class="tl-date">Janvier — Février 2026</p>
+      <p class="tl-title">Site vitrine & Google Analytics</p>
+      <p class="tl-desc">Publication du site vitrine du hackathon sur GitHub Pages. Intégration de GA4 et configuration des événements personnalisés pour mesurer l'audience et les interactions.</p>
+    </div>
+    <div class="timeline-item gold">
+      <p class="tl-date">Mai — Juin 2026</p>
+      <p class="tl-title">Période en milieu professionnel</p>
+      <p class="tl-desc">Stage en entreprise. Application des compétences acquises en environnement professionnel réel. Gestion de parc, support utilisateurs, administration Windows Server.</p>
+    </div>
+    <div class="timeline-item">
+      <p class="tl-date">Juin 2026</p>
+      <p class="tl-title">Bilan de première année</p>
+      <p class="tl-desc">Finalisation du portfolio, présentation des réalisations professionnelles. Validation des compétences du référentiel BTS SIO.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner fade-up">
+    <p class="section-label" style="justify-content:center;">✉️ Me contacter</p>
+    <h2 class="section-title">Prendre contact</h2>
+    <p class="section-desc">
+      Vous souhaitez en savoir plus sur mon parcours, mes projets ou mes compétences ? 
+      N'hésitez pas à me contacter.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:m-hemed.ben-mabrouk@efrei.net" class="btn-primary">📧 Envoyer un email</a>
+      <a href="https://github.com/MhMD077" target="_blank" class="btn-outline">GitHub ↗</a>
+      <a href="https://linkedin.com" target="_blank" class="btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Portfolio BTS SIO — Première année · Session 2025–2027</span>
+  
+</footer>
+
+<script>
+  function toggleComp(card) {
+    const detail = card.querySelector('.comp-detail');
+    const btn = card.querySelector('.comp-toggle');
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open');
+    btn.textContent = isOpen ? 'Voir le détail ↓' : 'Réduire ↑';
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
